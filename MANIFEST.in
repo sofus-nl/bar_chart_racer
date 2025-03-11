@@ -1,1 +1,3 @@
-include LICENSE bar_chart_race/_codes/*
+include LICENSE
+include bar_chart_racer/py.typed
+include bar_chart_racer/_codes/*
