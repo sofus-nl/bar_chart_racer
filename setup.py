@@ -12,13 +12,13 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="bar_chart_racer",
     version=version,
-    author="Your Name",  # TODO: Update with your name
-    author_email="your.email@example.com",  # TODO: Update with your email
+    author="Wibo van der Sluis",  # TODO: Update with your name
+    author_email="wibo@sofus.nl",  # TODO: Update with your email
     description="Create animated bar chart races using matplotlib and plotly",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords="visualization animation bar chart race matplotlib pandas plotly",
-    url="https://github.com/yourusername/bar_chart_racer",  # TODO: Update with your GitHub username
+    url="https://github.com/sofus-nl/bar_chart_racer",  # TODO: Update with your GitHub username
     packages=setuptools.find_packages(),
     license='MIT',
     classifiers=[
