@@ -128,7 +128,7 @@ class TestSimpleBC:
 
     def test_writer(self):
         """Test different writers."""
-        bar_chart_race(df, 'tests/videos/test.mpeg', n_bars=6, writer='imagemagick')
+        bar_chart_race(df, 'tests/videos/test.gif', n_bars=6, writer='pillow')
 
     def test_fig(self):
         """Test using a custom figure."""

@@ -3,7 +3,8 @@ from typing import Dict, List, Literal, Optional, Tuple, Union, Any, Callable
 
 import pandas as pd
 import numpy as np
-from matplotlib import image as mimage
+import PIL
+import urllib
 
 
 def load_dataset(name: str = 'covid19') -> pd.DataFrame:
@@ -139,7 +140,7 @@ def prepare_wide_data(
         else:
             df_values.iloc[:, 0] = df_values.iloc[:, 0].interpolate()
     else:
-        df_values.iloc[:, 0] = df_values.iloc[:, 0].fillna(method='ffill')
+        df_values.iloc[:, 0] = df_values.iloc[:, 0].ffill()
     
     df_values = df_values.set_index(df_values.columns[0])
     
@@ -250,7 +251,7 @@ def prepare_long_data(
         columns=columns,
         values=values,
         aggfunc=aggfunc
-    ).fillna(method='ffill')
+    ).ffill()
     
     return prepare_wide_data(
         df_wide,
@@ -313,8 +314,9 @@ def read_images(filename: str, columns: List[str]) -> Dict[str, np.ndarray]:
             final_url = url_path.format(code=code)
             
         try:
-            image_dict[col] = mimage.imread(final_url)
+            with urllib.request.urlopen(final_url) as url:
+                image_dict[col] = np.array(PIL.Image.open(url))
         except Exception as e:
             raise ValueError(f"Failed to read image for column '{col}': {e}")
-            
+
     return image_dict
