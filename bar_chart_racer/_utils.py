@@ -4,13 +4,14 @@ from typing import Dict, List, Literal, Optional, Tuple, Union, Any, Callable
 import pandas as pd
 import numpy as np
 import PIL
-import urllib
+import urllib.request
 
 
 def load_dataset(name: str = 'covid19') -> pd.DataFrame:
     '''
     Return a pandas DataFrame suitable for immediate use in `bar_chart_race`.
-    Must be connected to the internet
+    Will attempt to load the dataset from the local package first and
+    download from GitHub if it is not available locally.
 
     Parameters
     ----------
@@ -32,8 +33,7 @@ def load_dataset(name: str = 'covid19') -> pd.DataFrame:
     ValueError
         If the dataset name is not recognized
     '''
-    # TODO: Update this URL to your own repository once you've uploaded the data files
-    url = f'https://raw.githubusercontent.com/dexplo/bar_chart_race/master/data/{name}.csv'
+    url = f'https://raw.githubusercontent.com/sofus-nl/bar_chart_racer/main/data/{name}.csv'
 
     index_dict = {
         'covid19_tutorial': 'date',
@@ -51,6 +51,11 @@ def load_dataset(name: str = 'covid19') -> pd.DataFrame:
     index_col = index_dict[name]
     parse_dates = [index_col] if index_col else None
     
+    # Attempt to load the dataset from the local package data directory first
+    local_path = Path(__file__).resolve().parent.parent / 'data' / f'{name}.csv'
+    if local_path.exists():
+        return pd.read_csv(local_path, index_col=index_col, parse_dates=parse_dates)
+
     try:
         return pd.read_csv(url, index_col=index_col, parse_dates=parse_dates)
     except Exception as e:

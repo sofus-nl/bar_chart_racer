@@ -4,16 +4,16 @@
 
 This project has been refactored from `bar_chart_race` to `bar_chart_racer` with the following key improvements:
 
-1. **Python 3.11+ Compatibility**
-   - Updated Python requirement from 3.6+ to 3.11+
+1. **Python 3.12+ Compatibility**
+   - Updated Python requirement from 3.6+ to 3.12+
    - Added comprehensive type hints throughout the codebase
    - Modernized string formatting using f-strings
    - Improved error handling with more specific exceptions
 
 2. **Dependency Updates**
-   - Updated pandas requirement to 2.0.0+
-   - Updated matplotlib requirement to 3.7.0+
-   - Made plotly a required dependency (5.13.0+)
+   - Updated pandas requirement to 2.3.1+
+   - Updated matplotlib requirement to 3.10.3+
+   - Made plotly a required dependency (6.2.0+)
 
 3. **Package Structure Improvements**
    - Added py.typed marker file for PEP 561 compliance

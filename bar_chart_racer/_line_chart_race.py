@@ -9,6 +9,8 @@ from matplotlib.collections import LineCollection
 from matplotlib import ticker, colors as mcolors, dates as mdates
 from matplotlib import image as mimage
 from matplotlib import patches as mpatches
+import urllib.request
+from io import BytesIO
 
 from ._common_chart import CommonChart
 from ._utils import prepare_wide_data
@@ -307,7 +309,15 @@ class _LineChartRace(CommonChart):
             raise ValueError('The number of images does not match the number of columns')
         if isinstance(images, list):
             images = dict(zip(self.df_values.columns, images))
-        return {col: mimage.imread(image) for col, image in images.items()}
+
+        def read_image(obj):
+            if isinstance(obj, str) and obj.startswith('http'):
+                with urllib.request.urlopen(obj) as url:
+                    data = url.read()
+                return mimage.imread(BytesIO(data))
+            return mimage.imread(obj)
+
+        return {col: read_image(img) for col, img in images.items()}
             
     def get_visible(self, i):
         n = 1_000_000 # make all visible until better logic here
@@ -366,7 +376,11 @@ class _LineChartRace(CommonChart):
             collection.set_color(color_arr)
 
             is_other_agg = col in ('___others_line___', '___agg_line___')
-            if self.line_width_data is not None and not is_other_agg:
+            if (
+                self.line_width_data is not None
+                and not is_other_agg
+                and col in self.line_width_data.columns
+            ):
                 lw = self.line_width_data.iloc[i // self.steps_per_period][col]
                 lw_arr = collection.get_linewidths()
                 lw_arr = np.append(lw_arr, [lw], axis=0)
@@ -433,7 +447,7 @@ class _LineChartRace(CommonChart):
             ls = self.line_kwargs['ls']
             alpha = self.line_kwargs.get('alpha', 1)
             color[-1] = alpha
-            if self.line_width_data is not None:
+            if self.line_width_data is not None and col in self.line_width_data.columns:
                 lw = self.line_width_data.iloc[0][col]
             lc = LineCollection([[(x, val)]], colors=[color], visible=vis, linewidths=[lw], linestyles=[ls])
             collection = ax.add_collection(lc)
