@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/pypi/v/bar_chart_racer)](https://pypi.org/project/bar_chart_racer)
 [![PyPI - License](https://img.shields.io/pypi/l/bar_chart_racer)](LICENSE)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/release/python-3110/)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/release/python-3120/)
 
 Make animated bar and line chart races in Python with matplotlib and plotly.
 
@@ -14,10 +14,10 @@ Visit the [bar_chart_racer official documentation](https://github.com/sofus-nl/b
 
 ## Requirements
 
-- Python 3.11 or higher
-- pandas 2.0.0 or higher
-- matplotlib 3.7.0 or higher
-- plotly 5.13.0 or higher
+- Python 3.12 or higher
+- pandas 2.3.1 or higher
+- matplotlib 3.10.3 or higher
+- plotly 6.2.0 or higher
 
 ## Installation
 

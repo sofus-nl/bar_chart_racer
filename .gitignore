@@ -9,3 +9,4 @@ site/
 docs/
 data/
 tests/videos
+!tests/videos/.gitkeep
